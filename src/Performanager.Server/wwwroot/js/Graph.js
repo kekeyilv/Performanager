@@ -13,7 +13,6 @@
     maxn = Math.ceil(maxn);
     var ratioh = (300 - 40) / (maxn + 0.000000001);
     var ratiow = canvas.clientWidth / (data.length + 0.000000001);
-    console.log(maxn + ":" +ratioh);
     var lastx = -ratiow;
     context.moveTo(0, canvas.clientHeight);
     context.beginPath();
