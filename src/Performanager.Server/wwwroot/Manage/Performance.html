@@ -37,7 +37,7 @@
                 Draw(document.getElementsByTagName("canvas")[0], meminfo, Number(memtotal), "GB");
             }, 500);
             setInterval(async function () {
-                var cpuutil = (Number.parseInt(await GetPerformance("GetCPU?" + window.location.href.split("?")[1], document.getElementById("cpustate")))).toFixed(1);
+                var cpuutil = (Number.parseFloat(await GetPerformance("GetCPU?" + window.location.href.split("?")[1], document.getElementById("cpustate")))).toFixed(1);
                 if (cpuutil !== "NaN") {
                     $("#cpuutil").text("Utilization: " + cpuutil + " %");
                     if (cpuinfo.length >= 10) {
