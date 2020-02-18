@@ -1,0 +1,76 @@
+﻿<div style="padding:20px">
+    <script src="/js/Graph.js"></script>
+    <div style="font-size:20px">Memory</div>
+    <div id="memstate"></div>
+    <div><span id="memtotal"></span><span id="memfree"></span></div>
+
+    <canvas height="300" style="width:100%;height:300px;background-color:#f1fcff;margin:10px 0px 10px 0px"></canvas>
+    <div style="font-size:20px">CPU</div>
+    <div id="cpustate"></div>
+    <div><span id="cpuutil"></span></div>
+    <canvas height="300" style="width:100%;height:300px;background-color:#f1fcff;margin:10px 0px 10px 0px"></canvas>
+
+    <div style="font-size:20px">Network</div>
+    <div id="netstate"></div>
+    <div><span id="networksent"></span><span id="networkreceived"></span></div>
+    <div style="font-size:18px">Sent</div>
+    <canvas height="300" style="width:100%;height:300px;background-color:#f1fcff;margin:10px 0px 10px 0px"></canvas>
+    <div style="font-size:18px">Received</div>
+    <canvas height="300" style="width:100%;height:300px;background-color:#f1fcff;margin:10px 0px 10px 0px"></canvas>
+    <script>
+        var meminfo = [];
+        var cpuinfo = [];
+        var netsent = [];
+        var netrecv = [];
+        async function get() {
+            var memtotal = (Number.parseInt(await GetPerformance("GetMemoryTotal?" + window.location.href.split("?")[1], document.getElementById("memstate"))) / 1024 / 1024 / 1024).toFixed(2);
+            $("#memtotal").text("Total: " + memtotal + " GB   ");
+            setInterval(async function () {
+                var memfree = (Number.parseInt(await GetPerformance("GetMemoryFree?" + window.location.href.split("?")[1], document.getElementById("memstate"))) / 1024 / 1024 / 1024).toFixed(2);
+                if (memfree !== "NaN") {
+                    $("#memfree").text("Free: " + memfree + " GB");
+                    if (meminfo.length >= 10) {
+                        meminfo.splice(0, 1);
+                    }
+                    meminfo.push(Number((memtotal - memfree).toFixed(3)));
+                }
+                Draw(document.getElementsByTagName("canvas")[0], meminfo, Number(memtotal), "GB");
+            }, 500);
+            setInterval(async function () {
+                var cpuutil = (Number.parseInt(await GetPerformance("GetCPU?" + window.location.href.split("?")[1], document.getElementById("cpustate")))).toFixed(1);
+                if (cpuutil !== "NaN") {
+                    $("#cpuutil").text("Utilization: " + cpuutil + " %");
+                    if (cpuinfo.length >= 10) {
+                        cpuinfo.splice(0, 1);
+                    }
+                    cpuinfo.push(cpuutil);
+                }
+                Draw(document.getElementsByTagName("canvas")[1], cpuinfo, 100, "%");
+            }, 500);
+            setInterval(async function () {
+                var sent = Number.parseInt(await GetPerformance("GetNetworkSent?" + window.location.href.split("?")[1], document.getElementById("netstate")));
+                if (!isNaN(sent)) {
+                    $("#networksent").text("Sent: " + (sent / 1024 / 1024).toFixed(2) + " " + "MBps" + "  ");
+                    if (netsent.length >= 10) {
+                        netsent.splice(0, 1);
+                    }
+                    netsent.push((sent / 1024).toFixed(2));
+                }
+                Draw(document.getElementsByTagName("canvas")[2], netsent, null, "KBps");
+            }, 500);
+            setInterval(async function () {
+                var recv = Number.parseInt(await GetPerformance("GetNetworkReceived?" + window.location.href.split("?")[1], document.getElementById("netstate")));
+                if (!isNaN(recv)) {
+                    $("#networkreceived").text("Received: " + (recv / 1024 / 1024).toFixed(2) + "MBps");
+                    if (netrecv.length >= 10) {
+                        netrecv.splice(0, 1);
+                    }
+                    netrecv.push((recv / 1024).toFixed(2));
+                }
+                Draw(document.getElementsByTagName("canvas")[3], netrecv, null, "KBps");
+            }, 500);
+        }
+        get();
+    </script>
+
+</div>

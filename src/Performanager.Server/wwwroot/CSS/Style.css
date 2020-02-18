@@ -1,0 +1,33 @@
+﻿@font-face {
+    font-family: font;
+    src: url("../SourceHanSansK-Light.ttf")
+}
+
+.link {
+    text-decoration: none;
+    color: royalblue;
+}
+
+.blue_button {
+    display: inline-block;
+    margin: 5px;
+    background-color: royalblue;
+    border-color: royalblue;
+    border-style: solid;
+    border-width: 1px;
+    padding: 8px 20px 8px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: initial;
+    outline: 0
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    outline: 0;
+    border-color: rgba(0, 0, 0, 0.00) rgba(0, 0, 0, 0.00) royalblue rgba(0, 0, 0, 0.00);
+    border-style: solid;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.00);
+}

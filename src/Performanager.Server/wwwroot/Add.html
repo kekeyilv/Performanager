@@ -1,0 +1,13 @@
+﻿<div style="margin:20px">
+    <div style="font-size:30px">Add a server</div>        
+    <div style="text-align:center">
+        <form id="form">
+            <p>Name: <input type="text" name="Name" /></p>
+            <p>IPAddress: <input type="text" name="IP" /></p>
+            <p>Port: <input type="text" name="Port" /></p>
+            <p id="stateblock"></p>
+        </form>
+        <script src="/js/Request.js"></script>
+        <p><button class="blue_button" onclick="Add('#form',document.getElementById('stateblock'))">Submit</button></p>
+    </div>
+</div>
