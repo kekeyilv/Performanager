@@ -23,7 +23,7 @@
         var netsent = [];
         var netrecv = [];
         async function get() {
-            var memtotal = (Number.parseInt(await GetPerformance("GetMemoryTotal?" + window.location.href.split("?")[1], document.getElementById("memstate"))) / 1024 / 1024 / 1024).toFixed(2);
+            var memtotal = (Number.parseInt(await GetPerformance("GetMemoryTotal?" + window.location.href.split("?")[1], document.getElementById("memstate")))) / 1024 / 1024 / 1024).toFixed(2);
             $("#memtotal").text("Total: " + memtotal + " GB   ");
             setInterval(async function () {
                 var memfree = (Number.parseInt(await GetPerformance("GetMemoryFree?" + window.location.href.split("?")[1], document.getElementById("memstate"))) / 1024 / 1024 / 1024).toFixed(2);
@@ -37,7 +37,7 @@
                 Draw(document.getElementsByTagName("canvas")[0], meminfo, Number(memtotal), "GB");
             }, 500);
             setInterval(async function () {
-                var cpuutil = (Number.parseInt(await GetPerformance("GetCPU?" + window.location.href.split("?")[1], document.getElementById("cpustate")))).toFixed(1);
+                var cpuutil = (Number.parseInt(await GetPerformance("GetCPU?" + window.location.href.split("?")[1], document.getElementById("cpustate"))).toFixed(1);
                 if (cpuutil !== "NaN") {
                     $("#cpuutil").text("Utilization: " + cpuutil + " %");
                     if (cpuinfo.length >= 10) {
