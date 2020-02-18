@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
@@ -86,7 +87,9 @@ namespace Performanager.Client
                     static double GetCPUTime()
                     {
                         var infos = File.ReadAllText("/proc/uptime").Split(' ');
-                        return double.Parse(infos[0]) - double.Parse(infos[1]);
+                        var value0 = double.Parse(infos[0]);
+                        var value1 = double.Parse(infos[1]);
+                        return Math.Max(value0,value1)-Math.Min(value0,value1);
                     }
                     var time = GetCPUTime();
                     Thread.Sleep(500);
